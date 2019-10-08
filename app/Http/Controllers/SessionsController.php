@@ -16,7 +16,7 @@ class SessionsController extends Controller
     }
 
 
-    //提交表单
+    //提交表单,保存登录信息
     public function store(Request $request)
     {
        $credentials = $this->validate($request, [
@@ -34,5 +34,14 @@ class SessionsController extends Controller
 
 
        return;
+    }
+
+
+    //退出登录
+    public function destroy()
+    {
+        Auth::logout();
+        session()->flash('success', '您已成功退出！');
+        return redirect('login');
     }
 }
