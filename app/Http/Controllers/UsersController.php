@@ -7,6 +7,21 @@ use App\Models\User;
 
 class UsersController extends Controller
 {
+    //构造函数
+    public function __construct()
+    {
+
+        $this->middleware('auth', [            
+            'except' => ['show', 'create', 'store']
+        ]);
+
+        $this->middleware('guest', [
+            'only' => ['create']
+        ]);
+
+    }
+
+
     //注册用户方法
     public function create()
     {
@@ -43,6 +58,8 @@ class UsersController extends Controller
     //编辑页面
     public function edit(User $user)
     {
+        //验证不同用户
+        $this->authorize('update', $user);
         return view('users.edit', compact('user'));
     }
 
@@ -50,6 +67,9 @@ class UsersController extends Controller
     //编辑请求处理
     public function update(User $user, Request $request)
     {
+        //验证不同用户
+        $this->authorize('update', $user);
+
         $this->validate($request, [
             'name' => 'required|max:50',
             'password' => 'nullable|confirmed|min:6'
