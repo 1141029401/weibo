@@ -21,10 +21,11 @@ class UsersController extends Controller
         $this->middleware('guest', [
             'only' => ['create']
         ]);
-
     }
 
+    //首页  
     public function index(){
+      
         $users = User::paginate(10);
         return view('users.index', compact('users'));
     }
@@ -99,6 +100,7 @@ class UsersController extends Controller
         return redirect()->route('users.show', $user);
     }
 
+
     //删除请求处理
     public function destroy(User $user)
     {
@@ -138,5 +140,6 @@ class UsersController extends Controller
         session()->flash('success', '恭喜你，激活成功！');
         return redirect()->route('users.show', [$user]);
     }
+
 
 }
