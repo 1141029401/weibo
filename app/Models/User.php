@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -103,4 +102,5 @@ class User extends Authenticatable
     {
         return $this->followings->contains($user_id);
     }
+
 }
